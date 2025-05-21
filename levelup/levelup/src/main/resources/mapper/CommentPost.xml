@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.levelup.sns.mapper.CommentMapper">
+
+    <resultMap id="CommentPost" type="CommentPostDto">
+        <id property="id" column="id"/>
+        <result property="postId" column="post_id"/>
+        <result property="commentUser" column="comment_user"/>
+        <result property="createdDt" column="created_dt"/>
+        <result property="updatedDt" column="updated_dt"/>
+        <collection property="post" ofType="PostDto">
+            <result property="id" column="id"/>
+            <result property="userId" column="user_id"/>
+        </collection>
+    </resultMap>
+
+    <select id="commentWithPost" resultMap="CommentPost">
+        select p.user_id , c.id
+        from comment c
+        inner join post p on p.id = c.post_id
+    </select>
+</mapper>

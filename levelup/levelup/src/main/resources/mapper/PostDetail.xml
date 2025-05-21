@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.levelup.sns.mapper.PostMapper">
+
+    <resultMap id="PostMap" type="PostDetailDto">
+        <id property="id" column="id"/>
+        <result property="postImg" column="post_img"/>
+        <result property="postText" column="post_text"/>
+        <result property="postDt" column="post_dt"/>
+        <result property="postTag" column="post_tag"/>
+        <result property="commentCount" column="comment_count"/>
+        <result property="likeCount" column="like_count"/>
+    </resultMap>
+
+    <select id="findDetailPost" resultMap="PostMap">
+        select p.post_text,count(c.id) as comment_count ,count(l.id) as like_count
+        from post p
+        left join comment c on c.post_id =p.id
+        left join `like` l on l.post_id =p.id
+        group by p.id;
+    </select>
+</mapper>

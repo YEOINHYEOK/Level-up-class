@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.levelup.sns.mapper.UserMapper">
+    <resultMap id="PostUser" type="UserPostDto">
+        <id property="id" column="id"/>
+        <result property="loginId" column="login_id"/>
+        <result property="password" column="password"/>
+        <result property="age" column="age"/>
+        <result property="gender" column="gender"/>
+        <result property="name" column="name"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="email" column="email"/>
+        <result property="friendNum" column="friend_num"/>
+        <result property="userProfileImg" column="user_profile_img"/>
+        <result property="userBirth" column="user_birth"/>
+        <result property="createdDt" column="created_dt"/>
+        <result property="updatedDt" column="updated_dt"/>
+        <collection property="post" ofType="PostDto">
+            <result property="id" column="id"/>
+            <result property="userId" column="user_id"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="LikeUser" type="UserLikeDto">
+        <id property="id" column="id"/>
+        <result property="loginId" column="login_id"/>
+        <result property="password" column="password"/>
+        <result property="age" column="age"/>
+        <result property="gender" column="gender"/>
+        <result property="name" column="name"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="email" column="email"/>
+        <result property="friendNum" column="friend_num"/>
+        <result property="userProfileImg" column="user_profile_img"/>
+        <result property="userBirth" column="user_birth"/>
+        <result property="createdDt" column="created_dt"/>
+        <result property="updatedDt" column="updated_dt"/>
+        <collection property="like" ofType="LikeDto">
+            <result property="id" column="id"/>
+            <result property="userId" column="user_id"/>
+        </collection>
+    </resultMap>
+
+    <select id="userWithPost" resultMap="PostUser">
+        SELECT u.*, p.id
+        FROM user u
+        INNER JOIN post p ON u.id = p.user_id
+    </select>
+
+    <select id="userWithLike" resultMap="LikeUser">
+        select u.name, l.id
+        from `user` u
+        inner join `like` l on u.id = l.user_id;
+    </select>
+</mapper>
